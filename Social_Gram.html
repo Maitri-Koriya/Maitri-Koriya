@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<!--
+  PROJECT DETAILS TEMPLATE — reusable for any single project
+  ------------------------------------------------------------
+  This file matches the V2 portfolio theme exactly (same colors,
+  fonts, header, buttons). It does NOT include Home/About/Skills/
+  Resume/Certificates/Contact — only the single-project structure.
+
+  TO REUSE FOR A NEW PROJECT:
+  1. Duplicate this file (e.g. project-details-2.html)
+  2. Replace everything marked REPLACE: ... or [[ ... ]]
+  3. Update the "Prev / Next" links at the bottom to point to the
+     correct sibling project-details files
+  4. Link to it from a project card in index.html (see snippet
+     provided separately in chat)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="./images/favicon_icon.png">
+  <link href="./images/favicon_icon.png" rel="apple-touch-icon">
+
+<!-- REPLACE: page title -->
+<title>Social Gram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ V2 THEME TOKENS — kept identical to index.html ============ */
+  :root{
+    --ink:#121214;
+    --surface:#1b1b1f;
+    --surface-2:#232328;
+    --line: rgba(242,241,237,0.12);
+    --paper:#f2f1ed;
+    --paper-dim: rgba(242,241,237,0.62);
+    --cyan:#00b7d6;
+    --magenta:#ef2f8e;
+    --radius: 2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--ink); color:var(--paper);
+    font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden; cursor:default;
+  }
+  h1,h2,h3{font-family:'Anton',sans-serif; font-weight:400; letter-spacing:0.01em; margin:0;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  ::selection{background:var(--magenta); color:var(--ink);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 40px;}
+  @media (max-width:720px){ .wrap{padding:0 22px;} }
+
+  /* ============ custom cursor (same as V2) ============ */
+  .cursor-dot, .cursor-ring{position:fixed; top:0; left:0; pointer-events:none; z-index:998; border-radius:50%; transform:translate(-50%,-50%);}
+  .cursor-dot{width:6px; height:6px; background:var(--magenta);}
+  .cursor-ring{width:34px; height:34px; border:1px solid rgba(242,241,237,0.4); transition:width .2s,height .2s,border-color .2s, background .2s;}
+  .cursor-ring.hover{width:56px; height:56px; border-color:var(--cyan); background:rgba(0,183,214,0.08);}
+  @media (pointer:coarse){ .cursor-dot,.cursor-ring{display:none;} }
+
+  /* ============ registration marks (same as V2) ============ */
+  .reg-mark{position:fixed; width:22px; height:22px; z-index:200; pointer-events:none; opacity:0.5;}
+  .reg-mark svg{width:100%; height:100%;}
+  .reg-tl{top:14px; left:14px;} .reg-tr{top:14px; right:14px;}
+  .reg-bl{bottom:14px; left:14px;} .reg-br{bottom:14px; right:14px;}
+  @media (max-width:640px){ .reg-mark{width:14px; height:14px;} }
+
+  /* ============ header — identical structure to index.html ============ */
+  header.site{position:sticky; top:0; z-index:100; background:rgba(18,18,20,0.86); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; height:76px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Anton',sans-serif; font-size:20px; letter-spacing:0.02em;}
+  .brand-chip{width:34px; height:34px; border-radius:50%; background:conic-gradient(var(--cyan), var(--magenta), var(--cyan)); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink); font-weight:700;}
+  nav.links{display:flex; gap:34px; font-size:14px; font-weight:500;}
+  nav.links a{text-decoration:none; color:var(--paper-dim); transition:color .2s;}
+  nav.links a:hover{color:var(--paper);}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:var(--radius); font-size:13px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase; text-decoration:none; cursor:pointer; border:1px solid transparent; font-family:'JetBrains Mono',monospace; transition:all .25s;}
+  .btn-solid{background:var(--paper); color:var(--ink);}
+  .btn-solid:hover{background:var(--magenta); color:var(--paper); transform:translateY(-2px);}
+  .btn-ghost{border-color:var(--line); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--paper); transform:translateY(-2px);}
+  .btn-sm{padding:10px 18px; font-size:12px;}
+  @media (max-width:860px){ nav.links{display:none;} }
+
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cyan); display:flex; align-items:center; gap:10px; margin-bottom:18px;}
+  .eyebrow::before{content:''; width:26px; height:1px; background:var(--cyan);}
+
+  /* ============ back button ============ */
+  .back-row{padding:32px 0 0;}
+  .back-link{display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--paper-dim); text-decoration:none; transition:color .2s;}
+  .back-link:hover{color:var(--cyan);}
+  .back-link .arrow{transition:transform .2s;}
+  .back-link:hover .arrow{transform:translateX(-4px);}
+
+  /* ============ project hero ============ */
+  .proj-hero{padding:50px 0 60px;}
+  .proj-hero h1{font-size:clamp(38px,6.5vw,72px); line-height:1.02; margin:14px 0 22px;}
+  .proj-hero p.intro{max-width:640px; font-size:17px; line-height:1.75; color:var(--paper-dim);}
+  .proj-cover{margin-top:44px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); background:var(--surface);}
+  .proj-cover img{width:100%; aspect-ratio:16/8; object-fit:cover;}
+
+  section{padding:80px 0; border-top:1px solid var(--line);}
+  .section-label{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cyan); margin-bottom:32px; display:flex; align-items:center; gap:10px;}
+  .section-label::before{content:''; width:26px; height:1px; background:var(--cyan);}
+
+  /* ============ project info grid ============ */
+  .info-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:30px;}
+  @media (max-width:820px){ .info-grid{grid-template-columns:repeat(2,1fr);} }
+  .info-item dt{font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.07em; color:var(--paper-dim); margin:0 0 8px;}
+  .info-item dd{margin:0; font-size:16px; font-weight:700;}
+
+  /* ============ overview ============ */
+  .overview-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px;}
+  @media (max-width:820px){ .overview-grid{grid-template-columns:1fr;} }
+  .overview-block h3{font-family:'Inter',sans-serif; font-weight:700; font-size:16px; margin-bottom:10px;}
+  .overview-block p{font-size:15.5px; line-height:1.8; color:var(--paper-dim); margin:0 0 26px;}
+
+  /* ============ design process ============ */
+  .process-list{display:grid; grid-template-columns:repeat(5,1fr); gap:24px;}
+  @media (max-width:960px){ .process-list{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .process-list{grid-template-columns:1fr;} }
+  .process-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:26px 22px; transition:border-color .25s, transform .25s;}
+  .process-card:hover{border-color:var(--cyan); transform:translateY(-4px);}
+  .process-num{font-family:'Anton',sans-serif; font-size:28px; color:var(--magenta); margin-bottom:14px;}
+  .process-card h3{font-family:'Inter',sans-serif; font-size:15px; font-weight:700; margin-bottom:8px;}
+  .process-card p{font-size:13.5px; line-height:1.6; color:var(--paper-dim); margin:0;}
+
+  /* ============ gallery (masonry, mixed aspect ratios) ============ */
+  .gallery-grid{columns:3 260px; column-gap:20px;}
+  @media (max-width:760px){ .gallery-grid{columns:2 200px;} }
+  @media (max-width:480px){ .gallery-grid{columns:1;} }
+  .gallery-item{break-inside:avoid; margin-bottom:20px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); cursor:pointer; background:var(--surface); position:relative;}
+  .gallery-item img{width:100%; height:auto; display:block; transition:transform .5s ease, opacity .3s ease;}
+  .gallery-item:hover img{transform:scale(1.04); opacity:0.9;}
+  .gallery-item::after{content:'⤢'; position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(18,18,20,0.6); color:var(--paper); display:flex; align-items:center; justify-content:center; font-size:14px; opacity:0; transition:opacity .25s;}
+  .gallery-item:hover::after{opacity:1;}
+  .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  background: var(--surface);
+  position: relative;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform .5s ease, opacity .3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.04);
+  opacity: .9;
+}
+
+@media (max-width: 760px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+  /* ============ lightbox ============ */
+  .lightbox{position:fixed; inset:0; background:rgba(18,18,20,0.94); z-index:500; display:none; align-items:center; justify-content:center; padding:40px;}
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:90vw; max-height:85vh; width:auto; border-radius:var(--radius); border:1px solid var(--line);}
+  .lightbox-close{position:absolute; top:24px; right:34px; font-size:28px; cursor:pointer; color:var(--paper); line-height:1;}
+  .lightbox-close:hover{color:var(--magenta);}
+
+  /* ============ results ============ */
+  .results-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:50px;}
+  @media (max-width:820px){ .results-grid{grid-template-columns:1fr;} }
+  .results-copy h3{font-family:'Inter',sans-serif; font-weight:700; font-size:16px; margin-bottom:10px;}
+  .results-copy p{font-size:15.5px; line-height:1.8; color:var(--paper-dim); margin:0 0 24px;}
+  .skill-tags{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px;}
+  .skill-tag{font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:7px 14px; border:1px solid var(--line); border-radius:16px; color:var(--paper-dim);}
+  .feedback-card{background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--magenta); border-radius:var(--radius); padding:28px;}
+  .feedback-card .quote-mark{font-family:'Anton',sans-serif; font-size:36px; color:var(--magenta); line-height:1; margin-bottom:8px;}
+  .feedback-card p{font-size:15px; line-height:1.7; color:var(--paper-dim); margin:0 0 18px;}
+  .feedback-who strong{display:block; font-size:14px;}
+  .feedback-who span{font-size:12.5px; color:var(--paper-dim);}
+
+  /* ============ project navigation (prev / all / next) ============ */
+  .proj-nav{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:20px;}
+  @media (max-width:700px){ .proj-nav{grid-template-columns:1fr; text-align:center;} }
+  .nav-side{display:flex; flex-direction:column; gap:6px;}
+  .nav-side.next{align-items:flex-end; text-align:right;}
+  @media (max-width:700px){ .nav-side.next{align-items:center; text-align:center;} }
+  .nav-side a{text-decoration:none; transition:color .2s;}
+  .nav-side .nav-label{font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--paper-dim);}
+  .nav-side .nav-title{font-family:'Inter',sans-serif; font-size:17px; font-weight:700; margin-top:4px; color:var(--paper);}
+  .nav-side a:hover .nav-title{color:var(--cyan);}
+
+  footer{border-top:1px solid var(--line); padding:34px 0; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--paper-dim);}
+  .footer-row{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<!-- <div class="reg-mark reg-tl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" stroke="#f2f1ed" stroke-width="1" fill="none"/><line x1="12" y1="0" x2="12" y2="24" stroke="#f2f1ed" stroke-width="1"/><line x1="0" y1="12" x2="24" y2="12" stroke="#f2f1ed" stroke-width="1"/></svg></div>
+<div class="reg-mark reg-tr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" stroke="#f2f1ed" stroke-width="1" fill="none"/><line x1="12" y1="0" x2="12" y2="24" stroke="#f2f1ed" stroke-width="1"/><line x1="0" y1="12" x2="24" y2="12" stroke="#f2f1ed" stroke-width="1"/></svg></div>
+<div class="reg-mark reg-bl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" stroke="#f2f1ed" stroke-width="1" fill="none"/><line x1="12" y1="0" x2="12" y2="24" stroke="#f2f1ed" stroke-width="1"/><line x1="0" y1="12" x2="24" y2="12" stroke="#f2f1ed" stroke-width="1"/></svg></div>
+<div class="reg-mark reg-br"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" stroke="#f2f1ed" stroke-width="1" fill="none"/><line x1="12" y1="0" x2="12" y2="24" stroke="#f2f1ed" stroke-width="1"/><line x1="0" y1="12" x2="24" y2="12" stroke="#f2f1ed" stroke-width="1"/></svg></div> -->
+
+<!-- ============ HEADER — same nav as index.html ============ -->
+<header class="site">
+  <div class="wrap nav">
+    <!-- REPLACE: brand initials + name (keep identical to index.html) -->
+    <a href="index.html" class="brand" style="text-decoration:none;"><span class="brand-chip">MK</span>MAITRI KORIYA</a>
+    <nav class="links">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#resume">Resume</a>
+      <a href="index.html#work">Projects</a>
+      <a href="index.html#certificates">Certificates</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <!-- REPLACE: resume link, keep identical to index.html -->
+    <a href="resume.pdf" class="btn btn-solid" target="_blank">Resume ↓</a>
+  </div>
+</header>
+
+<div class="wrap back-row">
+  <!-- Back button → Projects section on index.html -->
+  <a href="index.html#work" class="back-link"><span class="arrow">←</span> Back to Projects</a>
+</div>
+
+<!-- ============ 1. PROJECT HERO ============ -->
+<section class="proj-hero wrap" style="border-top:none; padding-top:20px; padding-bottom:0;"><br>
+  <!-- REPLACE: project category -->
+  <div class="eyebrow">Figma : Mobile App</div>
+  <!-- REPLACE: project title -->
+  <h1>SocialGram</h1>
+  <!-- REPLACE: short introduction -->
+  <p>Every Post Tells a Story.</p>
+  <p class="intro">A social media mobile app UI/UX case study designed in Figma, focused on user-friendly interactions and essential social networking features.</p>
+  <!-- REPLACE: main cover image -->
+  <div class="proj-cover reveal">
+    <img src="./images/Socialgram/Socialgram_logo.png" alt="[[Project Title]] cover image">
+  </div>
+</section>
+<br>
+<!-- ============ 2. PROJECT INFORMATION ============ -->
+<section class="wrap"><br>
+  <div class="section-label">Project Info</div>
+  <dl class="info-grid">
+    <div class="info-item reveal"><dt>Client / Brand</dt><dd>Personal Project</dd></div>
+    <div class="info-item reveal"><dt>Project Type</dt><dd>UI/UX Case Study</dd></div>
+    <div class="info-item reveal"><dt>Tools Used</dt><dd>Figma</dd></div>
+    <div class="info-item reveal"><dt>link:</dt><dd><a href="https://www.figma.com/proto/VCtCEkHA6IQo1gmFk4KEcW/Social-Gram--insta-clone-?page-id=46%3A824&node-id=87-1359&p=f&viewport=465%2C146%2C0.31&t=tAZZohIckz0XIhnw-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=87%3A1359">Open Prototype</a></dd>
+    <dd><a href="https://www.figma.com/design/VCtCEkHA6IQo1gmFk4KEcW/Social-Gram--insta-clone-?node-id=87-1359&t=plMqj6cckbC4elej-1">Open Design</a></dd></div>
+  </dl>
+</section>
+
+<!-- ============ 3. PROJECT OVERVIEW ============ -->
+<section class="wrap"><br>
+  <div class="section-label">Overview</div>
+  <h3>Project Overview</h3>
+  <p>
+    <strong>SocialGram</strong> is a social media mobile application inspired by Instagram, created as a personal UI/UX learning project while exploring Figma and modern mobile design principles. The project focuses on understanding real-world social media application structure, intuitive navigation, and user-centered interface design. From authentication and content browsing to messaging and user profiles, every screen was designed to create a simple, familiar, and seamless user experience. Using Figma, the project includes wireframes, reusable components, consistent design patterns, and interactive prototypes that demonstrate the complete design process from concept to clickable prototype.
+  </p>
+  <style>
+    .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 24px;
+}
+
+.overview-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+}
+
+.overview-block h3 {
+    margin-bottom: 18px;
+}
+
+.overview-block p {
+    color: var(--paper-dim);
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.feature-list {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.feature-list li {
+    margin-bottom: 12px;
+    color: var(--paper-dim);
+    line-height: 1.7;
+}
+  </style>
+  <div class="overview-grid">
+    <div class="overview-block reveal">
+      <h3>Key Features</h3>
+      <ul class="feature-list">
+          <li>Clean login and sign-up interface.</li>
+          <li>Scrollable home feed for posts and content.</li>
+          <li>Search users and discover content.</li>
+          <li>One-to-one messaging interface.</li>
+          <li>User profile with posts and followers.</li>
+          <li>Simple and intuitive navigation.</li>
+      </ul>
+      <style>
+      .feature-list li {
+      white-space: nowrap;
+      }
+      </style>
+      <!-- <p>[[What was the situation before this project — the client's need or the problem you were solving.]]</p>
+      <h3>Main Goal</h3>
+      <p>[[What this project needed to achieve.]]</p>
+    </div>
+    <div class="overview-block reveal">
+      <h3>My Role</h3>
+      <p>[[Your specific responsibilities on this project.]]</p>
+      <h3>Work Completed</h3>
+      <p>[[A short list or summary of the deliverables you produced.]]</p>
+    </div> -->
+  </div>
+</section><br>
+
+<!-- ============ 4. DESIGN PROCESS ============ -->
+<section class="wrap"><br>
+  <div class="section-label">Design Process</div>
+  <div class="process-list">
+    <div class="process-card reveal"><div class="process-num">01</div><h3>Research</h3><p>Studied popular social media apps and user behavior to understand common interaction patterns.</p></div>
+    <div class="process-card reveal"><div class="process-num">02</div><h3>Planning</h3><p>Created user flows and organized screens for smooth navigation across the application.</p></div>
+    <div class="process-card reveal"><div class="process-num">03</div><h3>Design</h3><p>Designed modern mobile UI screens in Figma using reusable components and a consistent design system.</p></div>
+    <div class="process-card reveal"><div class="process-num">04</div><h3>Revisions</h3><p>Designed modern mobile UI screens in Figma using reusable components and a consistent design system.</p></div>
+    <div class="process-card reveal"><div class="process-num">05</div><h3>Final Delivery</h3><p>Completed an interactive Figma prototype with organized design files ready for presentation.</p></div>
+  </div>
+</section><br>
+
+<!-- ============ 5. PROJECT GALLERY ============ -->
+<section class="wrap"><br>
+  <div class="section-label">Gallery</div>
+  <!--
+    Add/remove .gallery-item blocks freely — the layout auto-flows
+    a masonry grid, so portrait, landscape, and square images all
+    fit without cropping. Just replace each image src.
+  -->
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-item reveal"><img src="./images/Socialgram/Login.png" alt="Loading_page"></div>
+    <div class="gallery-item reveal"><img src="./images/Socialgram/Register1.png" alt="login_page"></div>
+    <div class="gallery-item reveal"><img src="./images/Socialgram/Home.png" alt="Registration_page"></div>
+    <div class="gallery-item reveal"><img src="./images/Socialgram/Chat3_[search].png" alt="Home_page"></div>
+    <div class="gallery-item reveal"><img src="./images/Socialgram/Search1.png" alt="song_play"></div>
+    <div class="gallery-item reveal"><img src="./images/Socialgram/Posting2.png" alt="podcast_page"></div>
+    <div class="gallery-item reveal"><img src="./images/Socialgram/Notifications.png" alt="My_music_add_atrist_artist_list"></div>
+    <div class="gallery-item reveal"><img src="./images/Socialgram/Profile1.png" alt="Trending_song_page"></div>
+    <div class="gallery-item reveal"><img src="./images/Socialgram/Followers.png" alt="Acocunt_App_Setting"></div>
+    
+    
+  </div>
+</section><br>
+
+<!-- ============ 6. PROJECT RESULTS ============ -->
+<!-- <section class="wrap">
+  <div class="section-label">Results</div>
+  <div class="results-grid">
+    <div class="results-copy reveal">
+      <h3>Final Outcome</h3>
+      <p>[[The end result — what the client received and how it performed or was received.]]</p>
+      <h3>Skills Learned</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">[[Skill 1]]</span>
+        <span class="skill-tag">[[Skill 2]]</span>
+        <span class="skill-tag">[[Skill 3]]</span>
+      </div>
+    </div>
+    <div class="feedback-card reveal">
+      <div class="quote-mark">"</div>
+      REPLACE: client feedback quote
+      <p>[[A short client testimonial or note on the project's impact — optional, remove this card if you don't have one.]]</p>
+      <div class="feedback-who"><strong>[[Client Name]]</strong><span>[[Role, Company]]</span></div>
+    </div>
+  </div>
+</section>
+
+============ 7. PROJECT NAVIGATION ============
+<section class="wrap">
+  <div class="proj-nav">
+    <div class="nav-side prev">
+      REPLACE: link to previous project's file
+      <a href="[[project-details-prev.html]]">
+        <div class="nav-label">← Previous</div>
+        <div class="nav-title">[[Previous Project Name]]</div>
+      </a>
+    </div>
+    <a href="index.html#work" class="btn btn-ghost btn-sm">All Projects</a>
+    <div class="nav-side next">
+      REPLACE: link to next project's file
+      <a href="[[project-details-next.html]]">
+        <div class="nav-label">Next →</div>
+        <div class="nav-title">[[Next Project Name]]</div>
+      </a>
+    </div>
+  </div>
+</section> -->
+
+<footer>
+  <div class="wrap footer-row">
+    <!-- REPLACE: name, keep identical to index.html -->
+    <span>© <span id="year"></span> Maitri Koriya. All rights reserved.</span>
+    <span>Designed &amp; built with care.</span>
+  </div>
+</footer>
+
+<!-- ============ LIGHTBOX MARKUP ============ -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightboxClose">&times;</span>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---- Scroll reveal (same behavior as index.html) ---- */
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add('in'); });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+  /* ---- Gallery lightbox ---- */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('#galleryGrid .gallery-item img').forEach(img=>{
+    img.addEventListener('click', ()=>{
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+    });
+  });
+  document.getElementById('lightboxClose').addEventListener('click', ()=> lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') lightbox.classList.remove('open'); });
+
+  /* ---- Custom cursor (same behavior as index.html) ---- */
+  const dot = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+  if(window.matchMedia('(pointer: fine)').matches){
+    window.addEventListener('mousemove', (e)=>{
+      dot.style.left = e.clientX+'px'; dot.style.top = e.clientY+'px';
+      ring.style.left = e.clientX+'px'; ring.style.top = e.clientY+'px';
+    });
+    document.querySelectorAll('a, button, .gallery-item').forEach(el=>{
+      el.addEventListener('mouseenter', ()=> ring.classList.add('hover'));
+      el.addEventListener('mouseleave', ()=> ring.classList.remove('hover'));
+    });
+  } else {
+    dot.style.display='none'; ring.style.display='none';
+  }
+</script>
+
+</body>
+</html>
